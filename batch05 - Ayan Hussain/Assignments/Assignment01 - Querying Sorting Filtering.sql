@@ -14,7 +14,10 @@
 -- ============================================================
 
 -- Write your query below:
-
+SELECT first_name, last_name, city, phone
+FROM sales.customers
+WHERE upper(state) = 'CA'
+AND phone IS NOT NULL;
 
 
 
@@ -27,7 +30,9 @@
 -- ============================================================
 
 -- Write your query below:
-
+SELECT product_id, product_name, model_year, list_price
+FROM production.products 
+ORDER BY model_year DESC, list_price ASC;
 
 
 
@@ -41,10 +46,17 @@
 -- ============================================================
 
 -- Part a:
-
+SELECT TOP 5 percent
+       product_name, list_price
+FROM production.products 
+ORDER BY list_price DESC;
 
 -- Part b:
+SELECT TOP 5 PERCENT *
+FROM production.products
+ORDER BY list_price ASC;
 
+-- 17 rows has been fetched for above query
 
 
 
@@ -58,14 +70,28 @@
 --    c) Page 3  (rows 21 – 30)
 -- ============================================================
 
--- Page 1:
+-- Page 1: 
+SELECT *
+FROM production.products
+ORDER BY list_price DESC
+OFFSET 0 ROWS
+FETCH NEXT 10 ROWS ONLY;
 
 
 -- Page 2:
+SELECT *
+FROM production.products
+ORDER BY list_price DESC
+OFFSET 10 ROWS
+FETCH NEXT 10 ROWS ONLY;
 
 
 -- Page 3:
-
+SELECT *
+FROM production.products
+ORDER BY list_price DESC
+OFFSET 20 ROWS
+FETCH NEXT 10 ROWS ONLY;
 
 
 
@@ -81,15 +107,18 @@
 -- ============================================================
 
 -- Part a:
-
+SELECT DISTINCT state
+FROM sales.customers
+ORDER BY state;
 
 -- Part b:
-
+SELECT DISTINCT state, city
+FROM sales.customers
+ORDER BY state, city;
 
 -- Part c:
-
-
-
+SELECT COUNT(DISTINCT model_year)
+FROM production.products;
 
 -- ============================================================
 --  Question 6 — Logical Operators (AND / OR)
@@ -103,3 +132,9 @@
 -- ============================================================
 
 -- Write your query below:
+
+SELECT product_id, product_name, brand_id, category_id, list_price, model_year
+FROM production.products
+WHERE list_price BETWEEN 500.00 AND 1500.00
+AND (model_year = '2020' OR model_year = '2019')
+ORDER BY list_price ASC;
